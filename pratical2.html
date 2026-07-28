@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Portfolio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#eef2f7;
+}
+
+header{
+background:linear-gradient(135deg,#0f4c81,#1abc9c);
+color:white;
+text-align:center;
+padding:40px 20px;
+}
+
+.profile{
+width:150px;
+height:150px;
+border-radius:50%;
+border:5px solid white;
+object-fit:cover;
+box-shadow:0 5px 15px rgba(0,0,0,.3);
+margin-bottom:15px;
+}
+
+.container{
+width:80%;
+margin:30px auto;
+}
+
+.card{
+background:white;
+padding:25px;
+margin-bottom:25px;
+border-radius:12px;
+box-shadow:0 5px 15px rgba(0,0,0,.15);
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-5px);
+}
+
+h2{
+color:#0f4c81;
+margin-bottom:15px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+table,th,td{
+border:1px solid #ddd;
+}
+
+th{
+background:#0f4c81;
+color:white;
+}
+
+th,td{
+padding:12px;
+text-align:center;
+}
+
+ul{
+margin-left:20px;
+line-height:30px;
+}
+
+.bar{
+width:100%;
+height:15px;
+background:#ddd;
+border-radius:20px;
+margin-bottom:15px;
+}
+
+.bar div{
+height:100%;
+background:#1abc9c;
+border-radius:20px;
+}
+
+.html{width:95%;}
+.css{width:90%;}
+.java{width:85%;}
+.cpp{width:80%;}
+
+footer{
+background:#0f4c81;
+color:white;
+text-align:center;
+padding:20px;
+margin-top:30px;
+}
+
+@media(max-width:768px){
+
+.container{
+width:95%;
+}
+
+.profile{
+width:120px;
+height:120px;
+}
+
+table{
+font-size:14px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<img src="c:\Users\Administrator\Desktop\html\photu.jpeg" alt="passport photo" width="132" height="170" class="profile">
+ 
+
+<h1>Bhumika Dhakne</h1>
+
+<p>B.Tech Information Technology Student</p>
+
+</header>
+
+<div class="container">
+
+<div class="card">
+
+<h2><i class="fas fa-user"></i> About Me</h2>
+
+<p>
+I am a passionate B.Tech Information Technology student with an interest in
+Web Development, Java Programming, Data Structures & Algorithms, and Software Development.
+I enjoy learning new technologies and building creative projects.
+</p>
+
+</div>
+
+<div class="card">
+
+<h2><i class="fas fa-address-card"></i> Personal Information</h2>
+
+<table>
+
+<tr>
+<td><b>Name</b></td>
+<td>Bhumika Dhakne</td>
+</tr>
+
+<tr>
+<td><b>Date of Birth</b></td>
+<td>16 November 2007</td>
+</tr>
+
+<tr>
+<td><b>Gender</b></td>
+<td>Female</td>
+</tr>
+
+<tr>
+<td><b>College</b></td>
+<td>S.B jain Institute of Technology</td>
+</tr>
+
+<tr>
+<td><b>Branch</b></td>
+<td>Information Technology</td>
+</tr>
+
+<tr>
+<td><b>Nationality</b></td>
+<td>Indian</td>
+</tr>
+
+</table>
+
+</div>
+
+<div class="card">
+
+<h2><i class="fas fa-graduation-cap"></i> Education</h2>
+
+<table>
+
+<tr>
+<th>Course</th>
+<th>Institute</th>
+<th>Year</th>
+<th>Percentage / CGPA</th>
+</tr>
+
+<tr>
+<td>SSC</td>
+<td>Prerna convent School</td>
+<td>2022</td>
+<td>79.80</td>
+</tr>
+
+<tr>
+<td>HSC</td>
+<td>shri mohota science College</td>
+<td>2024</td>
+<td>88%</td>
+</tr>
+
+<tr>
+<td>B.Tech</td>
+<td>S.B jain Institute of Technology</td>
+<td>2026</td>
+<td>8.3 CGPA</td>
+</tr>
+
+</table>
+
+</div>
+
+<div class="card">
+
+<h2><i class="fas fa-laptop-code"></i> Technical Skills</h2>
+
+<p>HTML</p>
+<div class="bar"><div class="html"></div></div>
+
+<p>CSS</p>
+<div class="bar"><div class="css"></div></div>
+
+<p>Java</p>
+<div class="bar"><div class="java"></div></div>
+
+<p>C++</p>
+<div class="bar"><div class="cpp"></div></div>
+
+</div>
+
+<div class="card">
+
+<h2><i class="fas fa-folder-open"></i> Projects</h2>
+
+<ul>
+<li>Student Registration System</li>
+<li>Online Shopping Website</li>
+<li>Personal Portfolio Website</li>
+</ul>
+
+</div>
+
+<div class="card">
+
+<h2><i class="fas fa-certificate"></i> Certifications</h2>
+
+<ul>
+<li>NPTEL Digital Accessibility</li>
+<li>HTML & CSS Certification</li>
+<li>Java Programming Certification</li>
+</ul>
+
+</div>
+
+<div class="card">
+
+<h2><i class="fas fa-heart"></i> Hobbies</h2>
+
+<ul>
+<li>Reading Books</li>
+<li>Coding</li>
+<li>Listening to Music</li>
+<li>Travelling</li>
+</ul>
+
+</div>
+
+<div class="card">
+
+<h2><i class="fas fa-phone"></i> Contact Information</h2>
+
+<p><i class="fas fa-envelope"></i> bhumika@gmail.com</p>
+
+<p><i class="fas fa-phone"></i> +91 9876543210</p>
+
+<p><i class="fas fa-location-dot"></i> Maharashtra, India</p>
+
+</div>
+
+</div>
+
+<footer>
+
+&copy; 2026 Student Portfolio | Designed by Bhumika Dhakne
+
+</footer>
+
+</body>
+</html>
