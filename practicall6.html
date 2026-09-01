@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Grade Calculator</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        poppins: ['Poppins', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-indigo-100 via-white to-purple-100 font-poppins">
+
+    <!-- Header -->
+    <header class="bg-indigo-600 text-white shadow-lg">
+        <div class="max-w-6xl mx-auto px-6 py-5 flex justify-between items-center">
+            <div>
+                <h1 class="text-2xl font-bold">🎓 IT25075 Bhumika Dhakne</h1>
+                <p class="text-indigo-200 text-sm">
+                    Quick Student Result Calculator
+                </p>
+            </div>
+
+            <div class="text-3xl">
+                📊
+            </div>
+        </div>
+    </header>
+
+
+    <!-- Main -->
+    <main class="max-w-6xl mx-auto px-5 py-10">
+
+        <div class="grid lg:grid-cols-2 gap-8 items-start">
+
+            <!-- Input Card -->
+            <section class="bg-white rounded-3xl shadow-xl p-7">
+
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">
+                    Enter Student Details
+                </h2>
+
+                <p class="text-gray-500 mb-7">
+                    Enter marks for each subject to calculate the result.
+                </p>
+
+
+                <!-- Student Name -->
+                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                    Student Name
+                </label>
+
+                <input
+                    id="studentName"
+                    type="text"
+                    placeholder="Enter student name"
+                    class="w-full border border-gray-300 rounded-xl px-4 py-3 mb-5
+                           focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                >
+
+
+                <!-- Subjects -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+                    <div>
+                        <label class="text-sm font-semibold text-gray-700">
+                            Mathematics
+                        </label>
+
+                        <input
+                            id="math"
+                            type="number"
+                            min="0"
+                            max="100"
+                            placeholder="0 - 100"
+                            class="mark w-full mt-2 border border-gray-300 rounded-xl px-4 py-3
+                                   focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        >
+                    </div>
+
+
+                    <div>
+                        <label class="text-sm font-semibold text-gray-700">
+                            Science
+                        </label>
+
+                        <input
+                            id="science"
+                            type="number"
+                            min="0"
+                            max="100"
+                            placeholder="0 - 100"
+                            class="mark w-full mt-2 border border-gray-300 rounded-xl px-4 py-3
+                                   focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        >
+                    </div>
+
+
+                    <div>
+                        <label class="text-sm font-semibold text-gray-700">
+                            English
+                        </label>
+
+                        <input
+                            id="english"
+                            type="number"
+                            min="0"
+                            max="100"
+                            placeholder="0 - 100"
+                            class="mark w-full mt-2 border border-gray-300 rounded-xl px-4 py-3
+                                   focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        >
+                    </div>
+
+
+                    <div>
+                        <label class="text-sm font-semibold text-gray-700">
+                            Computer
+                        </label>
+
+                        <input
+                            id="computer"
+                            type="number"
+                            min="0"
+                            max="100"
+                            placeholder="0 - 100"
+                            class="mark w-full mt-2 border border-gray-300 rounded-xl px-4 py-3
+                                   focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        >
+                    </div>
+
+
+                    <div class="sm:col-span-2">
+
+                        <label class="text-sm font-semibold text-gray-700">
+                            Practical
+                        </label>
+
+                        <input
+                            id="practical"
+                            type="number"
+                            min="0"
+                            max="100"
+                            placeholder="0 - 100"
+                            class="mark w-full mt-2 border border-gray-300 rounded-xl px-4 py-3
+                                   focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- Buttons -->
+                <div class="flex gap-3 mt-7">
+
+                    <button
+                        onclick="calculateResult()"
+                        class="flex-1 bg-indigo-600 hover:bg-indigo-700
+                               text-white font-semibold py-3 rounded-xl
+                               transition transform hover:scale-[1.02]"
+                    >
+                        Calculate Result
+                    </button>
+
+                    <button
+                        onclick="resetForm()"
+                        class="px-6 bg-gray-100 hover:bg-gray-200
+                               text-gray-700 font-semibold rounded-xl transition"
+                    >
+                        Reset
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- Result Card -->
+            <section
+                id="resultCard"
+                class="bg-white rounded-3xl shadow-xl p-7
+                       min-h-[400px] flex flex-col justify-center"
+            >
+
+                <!-- Initial message -->
+                <div id="emptyResult" class="text-center">
+
+                    <div class="text-7xl mb-5">
+                        📝
+                    </div>
+
+                    <h2 class="text-2xl font-bold text-gray-800">
+                        Your Result Awaits
+                    </h2>
+
+                    <p class="text-gray-500 mt-2">
+                        Enter marks and click Calculate Result.
+                    </p>
+
+                </div>
+
+
+                <!-- Result -->
+                <div id="result" class="hidden">
+
+                    <div class="text-center mb-7">
+
+                        <div class="text-5xl mb-3">
+                            🎉
+                        </div>
+
+                        <h2
+                            id="resultName"
+                            class="text-2xl font-bold text-gray-800"
+                        ></h2>
+
+                        <p class="text-gray-500">
+                            Here's your performance summary
+                        </p>
+
+                    </div>
+
+
+                    <!-- Statistics -->
+                    <div class="grid grid-cols-2 gap-4">
+
+                        <div class="bg-indigo-50 rounded-2xl p-5 text-center">
+                            <p class="text-gray-500 text-sm">
+                                Total Marks
+                            </p>
+
+                            <p
+                                id="total"
+                                class="text-3xl font-bold text-indigo-600 mt-1"
+                            >
+                                0
+                            </p>
+
+                            <p class="text-gray-400 text-sm">
+                                / 500
+                            </p>
+                        </div>
+
+
+                        <div class="bg-purple-50 rounded-2xl p-5 text-center">
+                            <p class="text-gray-500 text-sm">
+                                Percentage
+                            </p>
+
+                            <p
+                                id="percentage"
+                                class="text-3xl font-bold text-purple-600 mt-1"
+                            >
+                                0%
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Grade -->
+                    <div
+                        id="gradeBox"
+                        class="mt-5 rounded-2xl p-6 text-center bg-green-50"
+                    >
+
+                        <p class="text-gray-500">
+                            Grade
+                        </p>
+
+                        <p
+                            id="grade"
+                            class="text-5xl font-bold text-green-600 mt-1"
+                        >
+                            A+
+                        </p>
+
+                        <p
+                            id="message"
+                            class="text-gray-600 mt-2"
+                        ></p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer class="text-center text-gray-500 text-sm py-6">
+        Made for practical sessions • GradeMate 🎓
+    </footer>
+
+
+    <!-- JavaScript -->
+    <script>
+
+        function calculateResult() {
+
+            const name = document.getElementById("studentName").value.trim();
+
+            const marks = [
+                Number(document.getElementById("math").value),
+                Number(document.getElementById("science").value),
+                Number(document.getElementById("english").value),
+                Number(document.getElementById("computer").value),
+                Number(document.getElementById("practical").value)
+            ];
+
+
+            // Validate name
+            if (name === "") {
+                alert("Please enter student name.");
+                return;
+            }
+
+
+            // Validate marks
+            for (let mark of marks) {
+
+                if (mark < 0 || mark > 100 || isNaN(mark)) {
+                    alert("Please enter valid marks between 0 and 100.");
+                    return;
+                }
+
+            }
+
+
+            // Calculate total
+            let totalMarks = 0;
+
+            for (let mark of marks) {
+                totalMarks += mark;
+            }
+
+
+            // Calculate percentage
+            const percentage = (totalMarks / 500) * 100;
+
+
+            // Calculate grade
+            let grade;
+            let message;
+
+            if (percentage >= 90) {
+                grade = "A+";
+                message = "Outstanding Performance! 🌟";
+            }
+            else if (percentage >= 80) {
+                grade = "A";
+                message = "Excellent Work! 👏";
+            }
+            else if (percentage >= 70) {
+                grade = "B";
+                message = "Very Good! 👍";
+            }
+            else if (percentage >= 60) {
+                grade = "C";
+                message = "Good Job! Keep improving.";
+            }
+            else if (percentage >= 50) {
+                grade = "D";
+                message = "You can do better! 💪";
+            }
+            else {
+                grade = "F";
+                message = "Needs Improvement. Keep practicing!";
+            }
+
+
+            // Display result
+            document.getElementById("emptyResult").classList.add("hidden");
+            document.getElementById("result").classList.remove("hidden");
+
+            document.getElementById("resultName").textContent = name;
+
+            document.getElementById("total").textContent = totalMarks;
+
+            document.getElementById("percentage").textContent =
+                percentage.toFixed(2) + "%";
+
+            document.getElementById("grade").textContent = grade;
+
+            document.getElementById("message").textContent = message;
+        }
+
+
+        function resetForm() {
+
+            document.getElementById("studentName").value = "";
+
+            document.querySelectorAll(".mark").forEach(input => {
+                input.value = "";
+            });
+
+            document.getElementById("result").classList.add("hidden");
+
+            document.getElementById("emptyResult").classList.remove("hidden");
+        }
+
+    </script>
+
+</body>
+</html>
