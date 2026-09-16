@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Registration</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 flex items-center justify-center p-4">
+
+    <!-- Registration Card -->
+    <div class="w-full max-w-md bg-white/95 backdrop-blur-lg rounded-3xl shadow-2xl p-8">
+
+        <!-- Header -->
+        <div class="text-center mb-6">
+            <div class="text-5xl mb-3">🎓</div>
+
+            <h1 class="text-3xl font-bold text-gray-800">
+                Student Registration
+            </h1>
+
+            <p class="text-gray-500 mt-2">
+                Create your account and start your journey 🚀
+            </p>
+        </div>
+
+
+        <form id="registrationForm">
+
+            <!-- Name -->
+            <div class="mb-4">
+                <label class="block text-gray-700 font-semibold mb-2">
+                    👤 Full Name
+                </label>
+
+                <input type="text" id="name"
+                    placeholder="Enter your full name"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-xl
+                    outline-none focus:ring-2 focus:ring-purple-500
+                    focus:border-purple-500">
+            </div>
+
+
+            <!-- Email -->
+            <div class="mb-4">
+                <label class="block text-gray-700 font-semibold mb-2">
+                    📧 Email Address
+                </label>
+
+                <input type="text" id="email"
+                    placeholder="example@gmail.com"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-xl
+                    outline-none focus:ring-2 focus:ring-purple-500
+                    focus:border-purple-500">
+            </div>
+
+
+            <!-- Password -->
+            <div class="mb-4">
+                <label class="block text-gray-700 font-semibold mb-2">
+                    🔐 Password
+                </label>
+
+                <input type="password" id="password"
+                    placeholder="Minimum 6 characters"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-xl
+                    outline-none focus:ring-2 focus:ring-purple-500
+                    focus:border-purple-500">
+            </div>
+
+
+            <!-- Mobile -->
+            <div class="mb-5">
+                <label class="block text-gray-700 font-semibold mb-2">
+                    📱 Mobile Number
+                </label>
+
+                <input type="text" id="mobile"
+                    placeholder="10 digit mobile number"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-xl
+                    outline-none focus:ring-2 focus:ring-purple-500
+                    focus:border-purple-500">
+            </div>
+
+
+            <!-- Register Button -->
+            <button type="submit"
+                class="w-full py-3 rounded-xl text-white font-bold text-lg
+                bg-gradient-to-r from-indigo-600 to-purple-600
+                hover:from-purple-600 hover:to-pink-500
+                transform hover:scale-105 transition duration-300 shadow-lg">
+
+                Register Now 🚀
+
+            </button>
+
+        </form>
+
+
+        <!-- Message -->
+        <p id="message"
+            class="text-center font-semibold mt-5">
+        </p>
+
+
+        <p class="text-center text-gray-400 text-sm mt-6">
+            © 2026 Student Portal
+        </p>
+
+    </div>
+
+
+    <!-- JavaScript -->
+    <script>
+
+        document.getElementById("registrationForm")
+        .addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            let name = document.getElementById("name").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let password = document.getElementById("password").value;
+            let mobile = document.getElementById("mobile").value.trim();
+
+            let message = document.getElementById("message");
+
+
+            // Check empty fields
+            if (name === "" || email === "" ||
+                password === "" || mobile === "") {
+
+                message.innerHTML = "⚠️ Please fill all mandatory fields.";
+                message.className =
+                    "text-center font-semibold mt-5 text-red-600";
+
+                return;
+            }
+
+
+            // Email validation
+            let emailPattern =
+                /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!emailPattern.test(email)) {
+
+                message.innerHTML =
+                    "❌ Please enter a valid email address.";
+
+                message.className =
+                    "text-center font-semibold mt-5 text-red-600";
+
+                return;
+            }
+
+
+            // Password validation
+            if (password.length < 6) {
+
+                message.innerHTML =
+                    "🔐 Password must be at least 6 characters.";
+
+                message.className =
+                    "text-center font-semibold mt-5 text-red-600";
+
+                return;
+            }
+
+
+            // Mobile validation
+            let mobilePattern = /^[0-9]{10}$/;
+
+            if (!mobilePattern.test(mobile)) {
+
+                message.innerHTML =
+                    "📱 Mobile number must contain 10 digits.";
+
+                message.className =
+                    "text-center font-semibold mt-5 text-red-600";
+
+                return;
+            }
+
+
+            // Success
+            message.innerHTML =
+                "🎉 Registration successful! Welcome!";
+
+            message.className =
+                "text-center font-semibold mt-5 text-green-600";
+
+        });
+
+    </script>
+
+</body>
+</html>
+
