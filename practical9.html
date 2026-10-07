@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Study Desk – Personal To-Do List</title>
+
+  <!-- Tailwind CSS (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Fraunces', 'Georgia', 'serif'],
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            ink: '#1f2a44',
+            paper: '#eef2f7',
+            rule: '#c9d6e8',
+            marker: '#ffe45e',
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* Ruled-notebook lines behind the task list */
+    .notebook {
+      background-image: repeating-linear-gradient(
+        to bottom, #fff 0, #fff 55px, #c9d6e8 55px, #c9d6e8 56px
+      );
+    }
+    /* Highlighter effect on completed tasks */
+    .done-text {
+      background: linear-gradient(transparent 55%, #ffe45e 55%);
+      text-decoration: line-through;
+      text-decoration-color: #1f2a44;
+      opacity: .6;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; }
+    }
+  </style>
+</head>
+
+<body class="bg-paper font-sans text-ink min-h-screen">
+  <main class="max-w-xl mx-auto px-4 py-10">
+
+    <!-- Header -->
+    <header class="mb-6">
+      <h1 class="font-display text-4xl font-bold">Study Desk</h1>
+      <p id="summary" class="mt-1 text-sm text-ink/70"></p>
+    </header>
+
+    <!-- Add task form -->
+    <section class="bg-white rounded-lg border border-rule p-4 mb-5">
+      <label for="taskInput" class="sr-only">New task</label>
+      <div class="flex flex-col sm:flex-row gap-2">
+        <input
+          id="taskInput"
+          type="text"
+          maxlength="120"
+          placeholder="e.g. Finish DBMS assignment"
+          class="flex-1 rounded-md border border-rule px-3 py-2 focus:outline-none focus:ring-2 focus:ring-ink"
+        />
+        <label for="categorySelect" class="sr-only">Category</label>
+        <select
+          id="categorySelect"
+          class="rounded-md border border-rule px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-ink"
+        >
+          <option value="Academic">Academic</option>
+          <option value="Personal">Personal</option>
+        </select>
+        <button
+          id="addBtn"
+          class="rounded-md bg-ink text-white px-5 py-2 font-medium hover:bg-ink/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ink"
+        >
+          Add task
+        </button>
+      </div>
+      <p id="error" class="hidden mt-2 text-sm text-red-700">Type a task before adding it.</p>
+    </section>
+
+    <!-- Filters -->
+    <nav class="flex gap-2 mb-3 text-sm" aria-label="Filter tasks">
+      <button data-filter="all"    class="filter-btn px-3 py-1 rounded-full border border-ink">All</button>
+      <button data-filter="active" class="filter-btn px-3 py-1 rounded-full border border-ink">To do</button>
+      <button data-filter="done"   class="filter-btn px-3 py-1 rounded-full border border-ink">Completed</button>
+      <button id="clearDone" class="ml-auto text-ink/70 underline hover:text-ink">Clear completed</button>
+    </nav>
+
+    <!-- Task list -->
+    <section class="notebook rounded-lg border border-rule overflow-hidden">
+      <ul id="taskList"></ul>
+      <p id="empty" class="hidden px-4 text-ink/60" style="line-height:56px;">
+        Nothing here yet. Add your first task above.
+      </p>
+    </section>
+
+  </main>
+
+  <script>
+    // ---------- State ----------
+    const STORAGE_KEY = 'study-desk-tasks';
+    let tasks = load();
+    let filter = 'all';
+
+    // ---------- Elements ----------
+    const input     = document.getElementById('taskInput');
+    const category  = document.getElementById('categorySelect');
+    const addBtn    = document.getElementById('addBtn');
+    const errorMsg  = document.getElementById('error');
+    const list      = document.getElementById('taskList');
+    const empty     = document.getElementById('empty');
+    const summary   = document.getElementById('summary');
+    const clearDone = document.getElementById('clearDone');
+
+    // ---------- Storage ----------
+    function load() {
+      try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+      catch { return []; }
+    }
+    function save() {
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks)); } catch {}
+    }
+
+    // ---------- Actions ----------
+    function addTask() {
+      const text = input.value.trim();
+      if (!text) {
+        errorMsg.classList.remove('hidden');
+        input.focus();
+        return;
+      }
+      errorMsg.classList.add('hidden');
+      tasks.unshift({
+        id: Date.now(),
+        text,
+        category: category.value,
+        done: false,
+      });
+      input.value = '';
+      input.focus();
+      save();
+      render();
+    }
+
+    function toggleTask(id) {
+      const t = tasks.find(t => t.id === id);
+      if (t) t.done = !t.done;
+      save();
+      render();
+    }
+
+    function deleteTask(id) {
+      tasks = tasks.filter(t => t.id !== id);
+      save();
+      render();
+    }
+
+    function clearCompleted() {
+      tasks = tasks.filter(t => !t.done);
+      save();
+      render();
+    }
+
+    // ---------- Render ----------
+    function render() {
+      const visible = tasks.filter(t =>
+        filter === 'all' ? true : filter === 'done' ? t.done : !t.done
+      );
+
+      list.innerHTML = '';
+      visible.forEach(t => {
+        const li = document.createElement('li');
+        li.className = 'flex items-center gap-3 px-4 h-14';
+
+        const check = document.createElement('input');
+        check.type = 'checkbox';
+        check.checked = t.done;
+        check.className = 'h-5 w-5 accent-[#1f2a44] cursor-pointer shrink-0';
+        check.setAttribute('aria-label', `Mark "${t.text}" as completed`);
+        check.addEventListener('change', () => toggleTask(t.id));
+
+        const label = document.createElement('span');
+        label.textContent = t.text;
+        label.className = 'flex-1 truncate ' + (t.done ? 'done-text' : '');
+
+        const badge = document.createElement('span');
+        badge.textContent = t.category;
+        badge.className =
+          'text-xs px-2 py-0.5 rounded-full shrink-0 ' +
+          (t.category === 'Academic' ? 'bg-ink text-white' : 'bg-marker text-ink');
+
+        const del = document.createElement('button');
+        del.textContent = 'Delete';
+        del.className = 'text-sm text-red-700 hover:underline shrink-0';
+        del.setAttribute('aria-label', `Delete "${t.text}"`);
+        del.addEventListener('click', () => deleteTask(t.id));
+
+        li.append(check, label, badge, del);
+        list.appendChild(li);
+      });
+
+      empty.classList.toggle('hidden', visible.length > 0);
+
+      const left = tasks.filter(t => !t.done).length;
+      summary.textContent = tasks.length === 0
+        ? 'Plan your classes, assignments and everything else.'
+        : `${left} of ${tasks.length} tasks left to do`;
+
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        const active = btn.dataset.filter === filter;
+        btn.classList.toggle('bg-ink', active);
+        btn.classList.toggle('text-white', active);
+      });
+    }
+
+    // ---------- Events ----------
+    addBtn.addEventListener('click', addTask);
+    input.addEventListener('keydown', e => { if (e.key === 'Enter') addTask(); });
+    clearDone.addEventListener('click', clearCompleted);
+    document.querySelectorAll('.filter-btn').forEach(btn =>
+      btn.addEventListener('click', () => { filter = btn.dataset.filter; render(); })
+    );
+
+    render();
+  </script>
+</body>
+</html>
